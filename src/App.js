@@ -1,23 +1,51 @@
-import logo from './logo.svg';
+import {posts} from './data/posts';
 import './App.css';
+
+function Blog () {
+  const formatDateHyphen = (dateString) => {
+    const date = new Date(dateString);
+    const year = date.getFullYear();
+    const month = date.getMonth() + 1;
+    const day = date.getDate();
+    return `${year}-${month}-${day}`;
+  }
+  const formatDateSlash = (dateString) => {
+    const date = new Date(dateString);
+    const year = date.getFullYear();
+    const month = date.getMonth() + 1;
+    const day = date.getDate();
+    return `${year}/${month}/${day}`;
+  }
+  return (
+    <>
+      {posts.map((post)=>{
+        return (
+          <li className='blog__item' key={post.id}>
+            <a href='' className='blog__link'>
+              <div className='blog__related'>
+                <time className='blog__time' dateTime={formatDateHyphen(post.createdAt)}>{formatDateSlash(post.createdAt)}</time>
+                <ul className='blog__tag-list'>
+                  {post.categories.map((category,index)=><li className='blog__tag' key={index}>{category}</li>)}
+                </ul>
+              </div>
+              <h1 className='blog__title'>{post.title}</h1>
+              <p className='blog__text'>
+                {post.content}
+              </p>
+            </a>
+          </li>
+        );
+      })}
+    </>
+  );
+}
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          課題1
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className='blog__container'>
+      <ul className='blog__list'>
+        <Blog />
+      </ul>
     </div>
   );
 }
