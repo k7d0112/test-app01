@@ -21,6 +21,9 @@ const BlogDetail = () => {
 
     const { id } = useParams();
     const article = posts.find(post => post.id === parseInt(id));
+    if(!article){
+        return <div>記事が見つかりませんでした。</div>
+    }
     return (
         <>
           <div className='blogDetail__container'>
