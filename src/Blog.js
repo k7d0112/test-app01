@@ -1,3 +1,4 @@
+import {Link} from 'react-router-dom';
 import {posts} from './data/posts';
 import './Blog.css';
 
@@ -21,19 +22,20 @@ function Blog () {
         {posts.map((post)=>{
             return (
             <li className='blog__item' key={post.id}>
-                <a href='' className='blog__link'>
-                <div className='blog__related'>
-                    <time className='blog__time' dateTime={formatDateHyphen(post.createdAt)}>{formatDateSlash(post.createdAt)}</time>
-                    <ul className='blog__tag-list'>
-                    {post.categories.map((category,index)=><li className='blog__tag' key={index}>{category}</li>)}
-                    </ul>
-                </div>
-                <h1 className='blog__title'>{post.title}</h1>
-                <p className='blog__text'>
-                    {post.content}
-                </p>
-                </a>
+                <Link to={`/articles/${post.id}`} className='blog__link'>
+                    <div className='blog__related'>
+                        <time className='blog__time' dateTime={formatDateHyphen(post.createdAt)}>{formatDateSlash(post.createdAt)}</time>
+                        <ul className='blog__tag-list'>
+                        {post.categories.map((category,index)=><li className='blog__tag' key={index}>{category}</li>)}
+                        </ul>
+                    </div>
+                    <h1 className='blog__title'>{post.title}</h1>
+                    <p className='blog__text'>
+                        {post.content}
+                    </p>
+                </Link>
             </li>
+
             );
         })}
       </>
