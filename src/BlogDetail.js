@@ -1,9 +1,9 @@
-import React from 'react';
+import { React,useState,useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { posts } from './data/posts';
+// import { posts } from './data/posts';
 import './BlogDetail.css';
 
-const BlogDetail = () => {
+const BlogDetail = ({article}) => {
     const formatDateHyphen = (dateString) => {
         const date = new Date(dateString);
         const year = date.getFullYear();
@@ -19,15 +19,13 @@ const BlogDetail = () => {
         return `${year}/${month}/${day}`;
     }
 
-    const { id } = useParams();
-    const article = posts.find(post => post.id === parseInt(id));
+    // const article = posts.find(post => post.id === parseInt(id));
     if(!article){
         return <div>記事が見つかりませんでした。</div>
     }
     return (
         <>
-          <div className='blogDetail__container'>
-            <img ClassName='blogDetail__thumbnail' src={article.thumbnailUrl}/>
+            <img className='blogDetail__thumbnail' src={article.thumbnailUrl}/>
             <div className='blogDetail__contents'>
                 <div className='blogDetail__tags'>
                     <time className='blog__time' dateTime={formatDateHyphen(article.createdAt)}>{formatDateSlash(article.createdAt)}</time>
@@ -38,9 +36,29 @@ const BlogDetail = () => {
                 <h1 className='blog__title'>{article.title}</h1>
                 <p className='blog__text'>{article.content}</p>
             </div>
-          </div>
         </>
     );
 }
 
-export default BlogDetail;
+const BlogDetailShow = () => {
+    const { id } = useParams();
+    const [article, setArticle] = useState(null);
+
+    useEffect(() => {
+      const fetcher = async () => {
+        const res = await fetch(`https://1hmfpsvto6.execute-api.ap-northeast-1.amazonaws.com/dev/posts/${id}`)
+        const data = await res.json()
+        setArticle(data.post)
+      }
+
+      fetcher()
+    }, [id])
+
+    return (
+        <div className='blogDetail__container'>
+            <BlogDetail article={article} />
+        </div>
+    );
+}
+
+export default BlogDetailShow;

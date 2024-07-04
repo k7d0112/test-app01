@@ -1,8 +1,9 @@
 import {Link} from 'react-router-dom';
-import {posts} from './data/posts';
+import { useState, useEffect} from 'react';
+// import {posts} from './data/posts';
 import './Blog.css';
 
-function Blog () {
+function Blog ({posts}) {
     const formatDateHyphen = (dateString) => {
         const date = new Date(dateString);
         const year = date.getFullYear();
@@ -43,10 +44,23 @@ function Blog () {
 }
 
 function BlogList () {
+    const [posts, setPosts] = useState([]);
+
+    // APIでpostsを取得する処理をuseEffectで実行します。
+    useEffect(() => {
+      const fetcher = async () => {
+        const res = await fetch("https://1hmfpsvto6.execute-api.ap-northeast-1.amazonaws.com/dev/posts")
+        const data = await res.json()
+        setPosts(data.posts)
+      }
+
+      fetcher()
+    }, [])
+
     return (
         <div className='blog__container'>
             <ul className='blog__list'>
-                <Blog />
+                <Blog posts={posts}/>
             </ul>
         </div>
     );

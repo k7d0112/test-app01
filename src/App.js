@@ -2,7 +2,7 @@ import React from 'react';
 import {Routes, Route} from 'react-router-dom';
 import Header from './Header';
 import BlogList from './Blog';
-import BlogDetail from './BlogDetail';
+import BlogDetailShow from './BlogDetail';
 import './App.css';
 
 
@@ -14,7 +14,7 @@ function App() {
 
       <Routes>
         <Route path='/' element={<BlogList />} />
-        <Route path='/articles/:id' element={<BlogDetail />} />
+        <Route path='/articles/:id' element={<BlogDetailShow />} />
       </Routes>
     </>
   );
