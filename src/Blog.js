@@ -1,9 +1,14 @@
-import {Link} from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
 import { useState, useEffect} from 'react';
 // import {posts} from './data/posts';
 import './Blog.css';
 
 function Blog ({posts}) {
+    const navigation = useNavigate();
+    const handleNavigation = (id) => {
+        Navigate(`/article/${id}`, {state: {loading: true}});
+    }
+
     const formatDateHyphen = (dateString) => {
         const date = new Date(dateString);
         const year = date.getFullYear();
@@ -23,7 +28,7 @@ function Blog ({posts}) {
         {posts.map((post)=>{
             return (
             <li className='blog__item' key={post.id}>
-                <Link to={`/articles/${post.id}`} className='blog__link'>
+                <Link to={`/articles/${post.id}`} className='blog__link' onClick={() => handleNavigation(post.id)}>
                     <div className='blog__related'>
                         <time className='blog__time' dateTime={formatDateHyphen(post.createdAt)}>{formatDateSlash(post.createdAt)}</time>
                         <ul className='blog__tag-list'>
