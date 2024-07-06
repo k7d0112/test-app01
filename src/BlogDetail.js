@@ -1,5 +1,5 @@
 import { React,useState,useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useLocation } from 'react-router-dom';
 // import { posts } from './data/posts';
 import './BlogDetail.css';
 
@@ -42,17 +42,27 @@ const BlogDetail = ({article}) => {
 
 const BlogDetailShow = () => {
     const { id } = useParams();
+    const location = useLocation();
     const [article, setArticle] = useState(null);
+    const [loading, setLoading] = useState(location.state?.loading || true);
 
     useEffect(() => {
-      const fetcher = async () => {
-        const res = await fetch(`https://1hmfpsvto6.execute-api.ap-northeast-1.amazonaws.com/dev/posts/${id}`)
-        const data = await res.json()
-        setArticle(data.post)
-      }
+        try {
+            const fetcher = async () => {
+                const res = await fetch(`https://1hmfpsvto6.execute-api.ap-northeast-1.amazonaws.com/dev/posts/${id}`)
+                const data = await res.json();
+                setArticle(data.post);
+            }
+        } finally {
+            setLoading(false);
+        }
 
       fetcher()
     }, [id])
+
+    if(loading) {
+        return <div>読み込み中です</div>
+    }
 
     return (
         <div className='blogDetail__container'>
