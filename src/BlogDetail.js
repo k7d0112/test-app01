@@ -47,18 +47,18 @@ const BlogDetailShow = () => {
     const [loading, setLoading] = useState(location.state?.loading || true);
 
     useEffect(() => {
+        const fetcher = async () => {
         try {
-            const fetcher = async () => {
                 const res = await fetch(`https://1hmfpsvto6.execute-api.ap-northeast-1.amazonaws.com/dev/posts/${id}`)
                 const data = await res.json();
                 setArticle(data.post);
-            }
-        } finally {
+            } finally {
             setLoading(false);
+            }
         }
 
-      fetcher()
-    }, [id])
+      fetcher();
+    }, [id]);
 
     if(loading) {
         return <div>読み込み中です</div>

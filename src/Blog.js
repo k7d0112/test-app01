@@ -1,12 +1,13 @@
+import React from 'react';
 import {Link, useNavigate} from 'react-router-dom';
 import { useState, useEffect} from 'react';
 // import {posts} from './data/posts';
 import './Blog.css';
 
 function Blog ({posts}) {
-    const navigation = useNavigate();
+    const navigate = useNavigate();
     const handleNavigation = (id) => {
-        Navigate(`/article/${id}`, {state: {loading: true}});
+        navigate(`/article/${id}`, {state: {loading: true}});
     }
 
     const formatDateHyphen = (dateString) => {

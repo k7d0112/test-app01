@@ -1,3 +1,5 @@
+import React from 'react';
+import { Link } from 'react-router-dom';
 import './Header.css';
 
 export default function Header () {
@@ -5,7 +7,7 @@ export default function Header () {
         <header className='header'>
           <div className='header__container'>
             <h1 className='header__logo'><a className='header__link'>Blog</a></h1>
-            <a href='' className='header__link'>お問い合わせ</a>
+            <Link to={'/contact'} className='header__link'>お問い合わせ</Link>
           </div>
         </header>
     );
